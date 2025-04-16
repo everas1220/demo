@@ -95,6 +95,27 @@
             <span th:case="false" th:text="${dto.last}"></span>
         </li>
     </ul>
+    <h3>웹 페이지 링크</h3>
+    <ul>
+        <!-- 배포 : 실제 서버에 프로그램을 올리는 작업
+         
+            http://localhost:8080/ 로컬 
+            
+            http://도메인주소/app/memder/login
+
+            http://도메인주소/app/memder/login
+        
+            th:href 나 href 경로는 똑같이 표현
+            파라미터를 보내는 방법이 달라짐
+            herf : /member/login?id=hong
+       
+             th:href : /member/login(id='hong')
+       
+            -->
+        <li><a th:href="@{/calc}"></a></li>
+        <li><a th:href="@{/ex1(param1='data,param2=10')}" calc></a></li>
+
+    </ul>
     <script>
         const name = "[[${name}]]"
     </script>
