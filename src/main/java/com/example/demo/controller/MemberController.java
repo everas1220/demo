@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.lang.reflect.Member;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,14 +28,18 @@ public class MemberController {
     // http://localhost:8080/member/register
     // void : templates/member/register.html
     @GetMapping("/register")
-    public void getRegister() {
+    public void getRegister(@ModelAttribute("mDTO") MemberDTO memberDTO) {
         log.info("회원가입");
     }
 
     @PostMapping("/register")
-    public String postRehister(@ModelAttribute("mDTO") MemberDTO memberDTO, RedirectAttributes rttr) {
+    public String postRehister(@ModelAttribute("mDTO") @Valid MemberDTO memberDTO, BindingResult result,
+            RedirectAttributes rttr) {
         log.info("회원가입 요청 {}", memberDTO);
 
+        if (result.hasErrors()) {
+            return "/member/register";
+        }
         // 로그인 페이지로 이동
         // redirect 방식으로 가면서 값을 보내고 싶다면? model(X)
         rttr.addAttribute("userid", memberDTO.getUserid());
